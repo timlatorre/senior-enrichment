@@ -25,9 +25,11 @@ module.exports = db.define("student", {
       min: 0.0,
       max: 4.0
     }
-  }
-},{
-  getterMethods:{
-    name: () => `${this.firstName} ${this.lastName}`
+  }, 
+  name: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`
+    }
   }
 })

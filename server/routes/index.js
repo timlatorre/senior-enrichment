@@ -6,7 +6,7 @@ router.use('/students', require('./students'));
 module.exports = router;
 
 router.get('/', function(req, res) {
-  res.send('works!');
+  res.send('API routes');
 });
 
 router.use(function (req, res) {
