@@ -1,10 +1,9 @@
 import { combineReducers } from 'redux'
-import studentReducer from './studentReducer'
-import campusReducer from './campusReducer'
+import students from './student'
+import campuses from './campus'
 
-const combinedReducer = combineReducers({
-  students: studentReducer,
-  campuses: campusReducer
+const reducers = combineReducers({
+  campuses,
+  students
 })
-
-export default combinedReducer
+export default reducers;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import { fetchSingleStudent } from '../reducers/studentReducer';
+import { fetchSingleStudent } from '../reducers/student';
 
 class Student_Single extends Component {
   componentDidMount () {
@@ -10,10 +10,19 @@ class Student_Single extends Component {
   }
 
   render() {
-    const student = this.props.student
+    const currentStudent = this.props.student;
     return(
       <div>
-        {student.name}
+        {currentStudent && currentStudent.map(student => (
+          <div key={student.id}>
+            <Link to={`/updateStudent/${student.id}`}>Edit</Link>
+            <h1>{student.name}</h1>
+            <h2>Campus:</h2>
+            <Link to={`/campuses/${student.campusId}`}>
+              {student.campus.name}
+            </Link>
+          </div>
+        ))}
       </div>
     );
   }

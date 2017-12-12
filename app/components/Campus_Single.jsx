@@ -1,33 +1,41 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
-import { fetchSingleCampus } from '../reducers/campusReducer';
+import { connect } from 'react-redux';
+import { fetchSingleCampus } from '../reducers/campus';
+import Students_List from './Students_List';
 
 class Campus_Single extends Component {
-  componentDidMount () {
+  componentDidMount() {
     const campusId = this.props.match.params.id;
     this.props.loadSingleCampus(campusId);
   }
 
   render() {
-    const campus = this.props.campus
-    return(
+    const currentCampus = this.props.campus
+    return (
       <div>
-        {campus.name}
+        {currentCampus.map(campus => (
+          <div key={campus.id}>
+            <h1>{campus.name}</h1>
+            <p>{campus.description}</p>
+            <h2>Students:</h2>
+            <Students_List students={campus.students} />
+          </div>
+        ))}
       </div>
     );
   }
 }
 
-function mapStateToProps (storeState) {
+function mapStateToProps(storeState) {
   return {
     campus: storeState.campuses
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    loadSingleCampus: function(campusId){
+    loadSingleCampus: function (campusId) {
       dispatch(fetchSingleCampus(campusId));
     }
   };

@@ -3,7 +3,7 @@
 const app = require('./server');
 const db = require('./db');
 const chalk = require('chalk');
-const PORT = 1337;
+const PORT = 2250;
 
 db.sync() // if you update your db schemas, make sure you drop the tables first and then recreate them
 .then(() => {
