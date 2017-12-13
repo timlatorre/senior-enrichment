@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import {render} from 'react-dom'
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -10,6 +10,7 @@ import Students from './Students';
 import Student_Single from './Student_Single'
 import Student_AddNew from './Student_AddNew'
 import Student_Update from './Student_Update'
+import Campus_Update from './Campus_Update'
 
 export default class Main extends Component {
 
@@ -22,6 +23,7 @@ export default class Main extends Component {
           <Route exact path="/campuses" component={Campuses} />
           <Route exact path="/campuses/:id" component={Campus_Single} />
           <Route path="/addCampus" component={Campus_AddNew} />
+          <Route path="/updateCampus/:id" component={Campus_Update} />
           <Route exact path="/students" component={Students} />
           <Route exact path="/students/:id" component={Student_Single} />
           <Route path="/updateStudent/:id" component={Student_Update} />

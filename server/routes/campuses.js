@@ -8,21 +8,8 @@ module.exports = router;
 
 // GET all campuses ---------------------->
 router.get('/', function(req, res, next) {
-  Campus.findAll()
+  Campus.findAll({include: [Student]})
   .then(campuses => res.json(campuses))
-  .catch(next)
-});
-
-// GET single campus --------------------->
-router.get('/:id', function(req, res, next) {
-  const campusId = req.params.id
-  Campus.findAll({
-    where: {
-      id: campusId
-    },
-    include: [Student]
-  })
-  .then(campus => res.json(campus))
   .catch(next)
 });
 
@@ -31,4 +18,19 @@ router.post('/addCampus', function(req, res, next) {
   Campus.create(req.body)
   .then(campus => status(201).json(campus)
   .catch(next))
+})
+
+// PUT new campus ---------------------->
+router.put('/updateCampus', function(req, res, next) {
+  const obj = req.body
+  const id = obj.id;
+  delete obj.id
+  Campus.update(obj, {
+    where: {id: id},
+    returning: true
+  })
+  .then(data => {
+    res.status(201).json(data[1][0].dataValues)
+  })
+  .catch(next)
 })

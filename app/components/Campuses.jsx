@@ -16,9 +16,13 @@ class Campuses extends Component {
         <ul>
           {campuses && campuses.map(campus => (
             <div key={campus.id}>
-              <Link to={`/campuses/${campus.id}`}>
-                <li >{campus.name}, {campus.description}</li>
-              </Link>
+              <div>
+                <Link to={`/campuses/${campus.id}`}>
+                <img src={campus.imageUrl} />
+                <div>{campus.name}</div>
+                <div>{campus.description}</div>
+                </Link>
+              </div>
             </div>
           ))}
         </ul>

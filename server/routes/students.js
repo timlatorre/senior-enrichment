@@ -9,45 +9,39 @@ module.exports = router;
 
 // GET all students --------------------->
 router.get('/', function(req, res, next) {
-  Student.findAll()
+  Student.findAll({include: [Campus]})
   .then(students => res.json(students))
-  .catch(next)
-});
-
-// GET single student --------------------->
-router.get('/:id', function(req, res, next) {
-  const studentId = req.params.id
-  Student.findAll({
-    where: {
-      id: studentId
-    },
-    include: [Campus]
-  })
-  .then(student => res.json(student))
   .catch(next)
 });
 
 // POST new campus ---------------------->
 router.post('/addStudent', function(req, res, next) {
   Student.create(req.body)
-  .then(campus => status(201).json(campus)
-  .catch(next))
+  .then(student => {
+    console.log("addedStudent is", student)
+    res.status(201).json(student.dataValues)
+  })
+  .catch(next)
 })
 
 // PUT new campus ---------------------->
-router.put('/updateStudent/:studentId', function(req, res, next) {
-  const id = req.params.studentId;
-  console.log("id is", id)
-  //console.log(req.body)
-  // Student.update({ where: { id } } req.body)
-  // .then(campus => status(201).json(campus)
-  // .catch(next))
+router.put('/updateStudent/', function(req, res, next) {
+  const obj = req.body
+  const id = obj.id;
+  delete obj.id
+  Student.update(obj, {
+    where: {id: id},
+    returning: true
+  })
+  .then(data => {
+    res.status(201).json(data[1][0].dataValues)
+  })
+  .catch(next)
 })
 
 // DELETE student ----------------------->
 router.delete('/delete/:studentId', function (req, res, next) {
-  const id = req.params.studentId;
-  console.log(id)
+  const id = Number(req.params.studentId);
   Student.destroy({ where: { id } })
     .then(() => res.status(204).end())
     .catch(next);

@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import { fetchSingleStudent } from '../reducers/student';
+import { fetchStudents } from '../reducers/student';
 
 class Student_Single extends Component {
   componentDidMount () {
-    const studentId = this.props.match.params.id;
-    this.props.loadSingleStudent(studentId);
+    this.props.loadStudents();
   }
 
   render() {
-    const currentStudent = this.props.student;
+    const studentId = Number(this.props.match.params.id);
+    const currentStudent = this.props.students.filter(student => studentId === student.id);
+
     return(
       <div>
         {currentStudent && currentStudent.map(student => (
@@ -30,14 +31,14 @@ class Student_Single extends Component {
 
 function mapStateToProps (storeState) {
   return {
-    student: storeState.students
+    students: storeState.students
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadSingleStudent: function(studentId){
-      dispatch(fetchSingleStudent(studentId));
+    loadStudents: function () {
+      dispatch(fetchStudents());
     }
   };
 }

@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchSingleCampus } from '../reducers/campus';
+import { fetchCampuses } from '../reducers/campus';
 import Students_List from './Students_List';
 
 class Campus_Single extends Component {
   componentDidMount() {
-    const campusId = this.props.match.params.id;
-    this.props.loadSingleCampus(campusId);
+    this.props.loadCampuses();
   }
 
   render() {
-    const currentCampus = this.props.campus
+    console.log("this.props", this.props)
+    const campusId = Number(this.props.match.params.id);
+    const currentCampus = this.props.campuses.filter(campus => campusId === campus.id);
     return (
       <div>
-        {currentCampus.map(campus => (
+        <Link to={`/updateCampus/${campusId}`}>Edit</Link>
+        {currentCampus && currentCampus.map(campus => (
           <div key={campus.id}>
             <h1>{campus.name}</h1>
             <p>{campus.description}</p>
@@ -29,14 +31,14 @@ class Campus_Single extends Component {
 
 function mapStateToProps(storeState) {
   return {
-    campus: storeState.campuses
+    campuses: storeState.campuses
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadSingleCampus: function (campusId) {
-      dispatch(fetchSingleCampus(campusId));
+    loadCampuses: function () {
+      dispatch(fetchCampuses());
     }
   };
 }

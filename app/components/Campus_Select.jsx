@@ -9,11 +9,10 @@ class Campus_Select extends Component {
 
   render() {
     const campuses = this.props.campuses;
-    console.log("active is", this.props.active)
     return (
-      <select name="campusSelect">
+      <select name="campusSelect" defaultValue={this.props.active}>
         {campuses && campuses.map(campus => (
-          <option key={campus.id} value={campus.id} defaultValue={campus.id === this.props.active}>{campus.name}</option>
+          <option key={campus.id} value={campus.id}>{campus.name}</option>
         ))}
       </select>
     );

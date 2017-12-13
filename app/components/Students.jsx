@@ -13,16 +13,24 @@ class Students extends Component {
     return (
       <div>
         <Link to={'/addStudent'}>Add New Student</Link>
-        <ul>
+        <table>
           {students && students.map(student => (
-            <div key={student.id}>
-              <Link to={`/students/${student.id}`}>
-                <li>{student.name}</li>
-              </Link>
+            <tr key={student.id}>
+              <td>
+                {student.id}
+              </td>
+              <td>
+                <Link to={`/students/${student.id}`}>
+                  {student.name}
+                </Link>
+              </td>
+              <td>
+                {student.campus.name}
+                </td>
               <button type="button" value={student.id} onClick={(evt) => this.props.deleteStudent(evt)}>X</button>
-            </div>
+            </tr>
           ))}
-        </ul>
+        </table>
       </div>
     );
   }
@@ -39,7 +47,7 @@ function mapDispatchToProps(dispatch) {
     loadStudents: function () {
       dispatch(fetchStudents());
     },
-    deleteStudent: function(evt) {
+    deleteStudent: function (evt) {
       const studentId = evt.target.value
       console.log("studentId is", studentId)
       dispatch(destroyStudent(studentId));

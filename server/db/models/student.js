@@ -17,7 +17,6 @@ module.exports = db.define("student", {
     allowNull: false,
     notEmpty: true,
     isEmail: true
-
   },
   gpa: {
     type: Sequelize.FLOAT,
