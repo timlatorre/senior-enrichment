@@ -26,7 +26,7 @@ class Students extends Component {
               </td>
               <td>
                 {student.campus.name}
-                </td>
+              </td>
               <button type="button" value={student.id} onClick={(evt) => this.props.deleteStudent(evt)}>X</button>
             </tr>
           ))}
@@ -49,7 +49,6 @@ function mapDispatchToProps(dispatch) {
     },
     deleteStudent: function (evt) {
       const studentId = evt.target.value
-      console.log("studentId is", studentId)
       dispatch(destroyStudent(studentId));
     }
   };

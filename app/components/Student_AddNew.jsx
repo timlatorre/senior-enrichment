@@ -40,7 +40,6 @@ function mapDispatchToProps(dispatch) {
       const lastName = fullName[1];
       const email = evt.target.studentEmail.value;
       const gpa = evt.target.studentGPA.value;
-      const campusId = evt.target.campusSelect.value;
       const student = { firstName, lastName, email, gpa, campusId};
       dispatch(postStudent(student));
     }
